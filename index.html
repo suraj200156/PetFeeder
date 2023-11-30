@@ -1,18 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DOG FEEDER</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distance Monitor</title>
 </head>
-
 <body>
-  <div class="logo"><img src="logo.png" alt=""></div>
-  <h1>DOG FEEDER</h1>
 
-  <button>Feed</button>
+    <h1>Distance Monitor</h1>
+
+    <div id="distance-container">
+        <p id="distance">Loading...</p>
+    </div>
+
+    <!-- Add a button to control LED -->
+    <button id="ledButton" onclick="toggleLED()">Toggle LED</button>
+
+    <script>
+        // Function to fetch distance data from Firebase
+        function getDistance() {
+            fetch('https://petfeeder-75dd9-default-rtdb.asia-southeast1.firebasedatabase.app/distance.json')
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.distance !== undefined) {
+                        document.getElementById('distance').innerText = 'Distance: ' + data.distance + ' cm';
+                    } else {
+                        document.getElementById('distance').innerText = 'No data available';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    document.getElementById('distance').innerText = 'Error fetching data';
+                });
+        }
+
+        // Function to toggle LED status
+        function toggleLED() {
+            // Fetch the current LED status from Firebase
+            fetch('https://petfeeder-75dd9-default-rtdb.asia-southeast1.firebasedatabase.app/LED_STATUS.json')
+                .then(response => response.json())
+                .then(data => {
+                    // Toggle the LED status and update in Firebase
+                    const newStatus = !data;
+                    fetch('https://petfeeder-75dd9-default-rtdb.asia-southeast1.firebasedatabase.app/LED_STATUS.json', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(newStatus),
+                    })
+                    .then(() => console.log('LED status updated successfully'))
+                    .catch(error => console.error('Error updating LED status:', error));
+                })
+                .catch(error => {
+                    console.error('Error fetching LED status:', error);
+                });
+        }
+
+        // Update distance every 5 seconds
+        setInterval(getDistance, 500);
+
+        // Initial fetch
+        getDistance();
+    </script>
+
 </body>
-
 </html>
