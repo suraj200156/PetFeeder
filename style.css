@@ -3,32 +3,54 @@ body {
 }
 
 .logo img {
-  margin-top: 50px;
-  width: 250px;
+  margin-top: 20px;
+  width: 80%;
+  max-width: 250px;
 }
 
 h1 {
   color: #af1b5d;
   font-weight: bold;
   font-size: 60px;
-margin-top: 0px;
-margin-bottom:0px;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 h2 {
   color: #ff8cb7;
-  margin-top: 0px;
   font-size: 23px;
-  margin: 0;
+  margin-top: 0;
+  margin-bottom: 20px;
 }
 
 button {
   font-size: 40px;
   padding: 10px 70px;
-  cursor: pointer;
   margin-top: 80px;
   background-color: #af1b5d;
   color: white;
   border: none;
   border-radius: 35px;
+}
+
+@media only screen and (max-width: 600px) {
+  .logo img {
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 40px; 
+  }
+
+  h2 {
+    font-size: 18px; 
+    margin-bottom: 10px;
+  }
+
+  button {
+    font-size: 24px; 
+    padding: 10px 30px;
+    margin-top: 40px; 
+    border-radius: 25px; 
+  }
 }
