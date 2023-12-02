@@ -118,7 +118,40 @@
     <button id="servo" onclick="rotateServo()">Feed</button>
 
     <script>
-        // Your JavaScript code remains unchanged
+        function updateProgress(foodPercentage) {
+            const path = document.getElementById('progressPath');
+            const percentageText = document.getElementById('foodPercentageText');
+
+            if (foodPercentage !== undefined) {
+                const dasharrayValue = (282 * foodPercentage) / 100 + ', 282';
+            path.setAttribute('stroke-dasharray', dasharrayValue);
+            percentageText.textContent = foodPercentage + '%';
+            } else {
+                percentageText.textContent = 'No data available';
+            }
+        }
+
+
+            function foodPercentage() {
+                fetch('https://petfeeder-75dd9-default-rtdb.asia-southeast1.firebasedatabase.app/FOOD_PERCENTAGE.json?auth=AIzaSyAsNLbKDcQH8gHvrvGVY9FmZCjKpzJT71Y')
+                    .then(response => response.json())
+                    .then(data => updateProgress(data));
+        }
+
+
+            foodPercentage();
+            setInterval(foodPercentage, 500);
+
+
+            function rotateServo() {
+                fetch('https://petfeeder-75dd9-default-rtdb.asia-southeast1.firebasedatabase.app/ROTATE_SERVO.json', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(true),
+                })
+            }
     </script>
 </body>
 
