@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Feeder</title>
+    <link rel="stylesheet" href="home.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            /* Updated to vertical layout */
+        }
+
+        .logo img {
+            width:45px;
+            height: 45px;
+        }
+
+        h1 {
+            color: #af1b5d;
+            font-weight: bold;
+            font-size: 45px;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        #foodProgress {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        #foodProgress circle {
+            fill: none;
+            stroke: #ff8cb7;
+            stroke-width: 10;
+        }
+
+        #foodProgress path {
+            fill: none;
+            stroke: #af1b5d;
+            stroke-width: 10;
+            stroke-linecap: round;
+            transition: stroke-dasharray 0.3s;
+        }
+
+        #foodPercentageText {
+            font-size: 20px;
+            text-anchor: middle;
+            dominant-baseline: central;
+            fill: #af1b5d;
+        }
+
+        .progressbar {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #servo {
+
+            font-size: 50px;
+            padding: 15px 110px;
+            margin-top: 50px;
+            background-color: #af1b5d;
+            color: white;
+            border: none;
+            border-radius: 35px;
+            margin-bottom:80px;
+        }
+
+        .logo{
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .inmo{
+            margin-top: 40px;
+            
+        }
+        .inmo h2{
+            margin-top: 0px;
+            margin-bottom: 0px;
+            text-align: center;
+            color: #af1b5d;
+        }
+       
+    </style>
+</head>
+
+<body>
+
+    <div class="logo">
+        <div class="logo"><img src="logo.png" alt=""></div>
+        <h1>PET FEEDER</h1>
+    </div>
+    <div class="progressbar">
+        <svg id="foodProgress" viewBox="0 0 100 100">
+            <circle r="45" cx="50" cy="50"></circle>
+            <path id="progressPath" stroke-dasharray="0, 282" d="M50 5
+                a 45 45 0 0 1 0 90
+                a 45 45 0 0 1 0 -90"></path>
+            <text id="foodPercentageText" x="50" y="50">0%</text>
+        </svg>
+    </div>
+    <div id="foodPercentage"></div>
+   <div class="inmo">
+    <h2>temprature: null</h2>
+    <h2>humidity: null</h2>
+   </div>
+    <button id="servo" onclick="rotateServo()">Feed</button>
+
+    <script>
+        // Your JavaScript code remains unchanged
+    </script>
+</body>
+
+</html>
