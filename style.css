@@ -1,0 +1,126 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    
+}
+
+body{
+    width: 100%;
+    background-color: #f1f3f4;
+}
+.user{
+   padding: 18px 18px 18px 18px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px;
+    background-color:#af1b5d;
+    border-bottom-left-radius: 35px;
+    border-bottom-right-radius: 35px;
+    margin-bottom: 30px;
+    
+}
+.user .profile img{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+.user h1{
+    font-size:40px;
+    font-weight: 600;
+    color:#F5F5F5;
+}
+
+.container{
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px; 
+}
+.progress_circular{
+    position: relative;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: conic-gradient( #c9356c 0deg, #D3D3D3 0deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #DCDCDC;
+}
+.progress_circular::after{
+    position: absolute;
+    content: '';
+    width: 157px;
+    height: 157px;
+    border-radius: 50%;
+    background-color: #f1f3f4;
+    
+}
+.value{
+    font-size: 45px;
+    font-weight: 550;
+    color: #c9356c;
+    z-index: 9;
+}
+
+.text{
+    padding-top: 10px;
+    font-size: 30px;
+    font-weight: 600;
+    color:#323643;
+}
+
+.dht11 h1{
+    font-size: 18px;
+    font-weight: 550;
+    margin-bottom: 3px;
+    color:#363434;
+}
+
+.portionSelect{
+    padding-top: 10px;
+    padding-bottom: 2px;
+}
+  .portionSelect input[type="range"] {
+    width: 180px;
+  }
+.selectPortion span{
+    font-size: 19px;
+    font-weight: 550;
+    margin-bottom: 3px;
+    color: #363434;
+
+}
+
+.schedule button {
+    font-size: 25px;
+    padding: 10px 60px;
+    margin-top: 40px;
+    background-color: #af1b5d;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    transition: transform 2s;
+}
+.schedule button:active {
+    transform: scale(3);
+}
+
+.feed button {
+    font-size: 25px;
+    padding: 10px 80px;
+    margin-top: 25px;
+    background-color: #af1b5d;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    transition: transform 2s;
+}
+
+.feed button:active {
+    transform: scale(3);
+}
