@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hour and Minute Selector</title>
+    <style>
+        body{
+    width: 100%;
+    background-color: #f1f3f4;
+}
+.user{
+   padding: 18px 18px 18px 18px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px;
+    background-color:#af1b5d;
+    border-bottom-left-radius: 35px;
+    border-bottom-right-radius: 35px;
+    margin-bottom: 30px;
+    
+}
+.user .profile img{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-left: 20px;
+}
+.user h1{
+    margin-top: 0px;
+    font-size:40px;
+    font-weight: 600;
+    color:#F5F5F5;
+}
+        * {
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        label {
+
+            display: block;
+            margin-bottom: 10px;
+            color: #323643;
+            font-size: 20px;
+        }
+
+        input[type="number"] {
+            width: 80px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+
+
+        .portionSelect {
+            padding-top: 10px;
+            padding-bottom: 2px;
+        }
+
+        .portionSelect input[type="range"] {
+            width: 180px;
+        }
+
+        .selectPortion span {
+            font-size: 19px;
+            font-weight: 550;
+            margin-bottom: 3px;
+            color: #363434;
+
+        }
+
+
+
+
+
+
+        button {
+            font-size: 25px;
+            padding: 10px 60px;
+            margin-top: 40px;
+            background-color: #af1b5d;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            transition: transform 2s;
+        }
+
+        button:active {
+            transform: scale(3);
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div class="user">
+        <div class="profile"><img src="/profile.jpeg" alt=""></div>
+        <h1>Tommy</h1>
+    </div>
+
+
+    <h2>Select time</h2>
+
+    <form>
+        <label for="hour">Hour:</label>
+        <input type="number" id="hour" name="hour" min="0" max="23" step="1">
+        <br><br>
+        <label for="minute">Minute:</label>
+        <input type="number" id="minute" name="minute" min="0" max="59" step="1">
+
+        <br><br>
+
+
+
+        <div class="portionSelect">
+            <input type="range" id="portion" name="portion" min="1" max="3" oninput="updateValue('portion')">
+        </div>
+        <div class="selectPortion">
+            <span>select portion: </span><span id="portionValue">2</span>
+        </div>
+
+
+
+
+        <button type="button" onclick="schedule()">Schedule</button>
+
+
+    </form>
+
+    <script>
+
+        async function schedule() {
+            try {
+                setPortion();
+                setTimeout(async () => {
+                    submitTime();
+                }, 1000);
+            } catch (error) {
+                console.error(`Error: ${error.message}`);
+            }
+        }
+
+
+        function submitTime() {
+            var selectedHour = document.getElementById("hour").value.padStart(2, '0');
+            var selectedMinute = document.getElementById("minute").value.padStart(2, '0');
+
+            const scheduleTime = selectedHour + ":" + selectedMinute;
+
+            fetch('https://petfeeder-79abc-default-rtdb.asia-southeast1.firebasedatabase.app/servoMotor/scheduleTime.json', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(scheduleTime),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Failed to submit data');
+                    }
+                })
+                .then(data => {
+                    console.log(data);
+                    alert('Time has been scheduled successfully');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error submitting data. Please try again.');
+                });
+        }
+
+
+        function updateValue(id) {
+            var slider = document.getElementById(id);
+            var valueDisplay = document.getElementById(id + 'Value');
+            valueDisplay.textContent = slider.value;
+        }
+
+        function setPortion() {
+            var slider = document.getElementById('portion');
+            var portionValues = [150, 200, 300];
+            var portion = portionValues[slider.value - 1];
+
+            fetch('https://petfeeder-79abc-default-rtdb.asia-southeast1.firebasedatabase.app/servoMotor/schedulePortions.json', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(portion),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to set portion');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error setting portion:', error);
+                });
+        }
+    </script>
+
+</body>
+
+</html>
